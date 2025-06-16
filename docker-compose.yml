@@ -1,0 +1,70 @@
+version: "3.8"
+
+services:
+  app:
+    build: .
+    container_name: application-spring-server
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    networks:
+      - backend
+
+  db:
+    image: postgres:15
+    container_name: application-spring-db
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${SPRING_DATASOURCE_USERNAME}
+      POSTGRES_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: application-spring-pgadmin
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    depends_on:
+      - db
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+      - ./pgadmin/servers.json:/pgadmin4/servers.json
+    networks:
+      - backend
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: application-spring-swagger-ui
+    ports:
+      - "9000:8080"
+    environment:
+      SWAGGER_JSON: /app/swagger.yaml
+    volumes:
+      - ./docs/swagger.yaml:/app/swagger.yaml
+    networks:
+      - backend
+
+volumes:
+  pgadmin-data:
+
+networks:
+  backend:

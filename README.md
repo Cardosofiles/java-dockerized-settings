@@ -350,6 +350,8 @@ networks:
 
 - Será necessário criar o arquivo `.env` com as variáveis ambiente.
 
+---
+
 # Annotations Fundamentais para Projetos Java Escaláveis
 
 ## 1. 📦 Spring Boot e Spring Framework
@@ -725,3 +727,164 @@ Annotation Categoria Finalidade
 | `@CreatedDate`, `@LastModifiedDate`              | JPA         | Auditar timestamps com Spring Data                                              |
 | `@RestControllerAdvice`                          | Spring Web  | Trata erros globais de APIs                                                     |
 | `@Slf4j`                                         | Lombok      | Gera um logger `private static final Logger log = LoggerFactory.getLogger(...)` |
+
+---
+
+# 🏦 Guia Java para Desenvolvimento de Sistemas Bancários
+
+Este documento reúne as **principais classes, anotações e APIs do ecossistema Java** utilizadas em sistemas financeiros robustos, como bancos, fintechs e sistemas de crédito.
+
+> 📘 Ideal para projetos com **Spring Boot, JPA, segurança, precisão financeira, autenticação e persistência de dados**.
+
+---
+
+## 📅 1. Manipulação de Datas e Tempo
+
+| Classe              | Uso Comum                                          |
+| ------------------- | -------------------------------------------------- |
+| `LocalDate`         | Datas sem hora (ex: nascimento, vencimento)        |
+| `LocalDateTime`     | Data e hora locais                                 |
+| `ZonedDateTime`     | Datas com fuso horário                             |
+| `Instant`           | Ponto fixo na linha do tempo (timestamp em UTC)    |
+| `Period`            | Diferença entre datas em **anos/meses/dias**       |
+| `Duration`          | Diferença entre horários em **segundos/minutos**   |
+| `DateTimeFormatter` | Conversão entre texto e datas (formatação/parsing) |
+
+---
+
+## 💰 2. Tipos Numéricos Precisos
+
+| Classe         | Uso Comum                                             |
+| -------------- | ----------------------------------------------------- |
+| `BigDecimal`   | Cálculos monetários com precisão exata (juros, saldo) |
+| `NumberFormat` | Formatação de valores monetários                      |
+
+> ⚠️ Nunca use `double` ou `float` para dinheiro.
+
+---
+
+## 📦 3. Coleções (Collections API)
+
+| Classe/Interface    | Finalidade                                  |
+| ------------------- | ------------------------------------------- |
+| `List`, `ArrayList` | Lista ordenada (transações, clientes)       |
+| `Map`, `HashMap`    | Dicionários (por CPF, número da conta)      |
+| `Set`, `HashSet`    | Conjuntos únicos (ex: CPFs sem duplicidade) |
+| `LinkedHashMap`     | Ordem de inserção (extratos cronológicos)   |
+| `TreeMap`           | Ordenado por chave                          |
+
+---
+
+## 🔐 4. Segurança e Criptografia
+
+| Classe/API              | Finalidade                                      |
+| ----------------------- | ----------------------------------------------- |
+| `MessageDigest`         | Geração de hash (ex: SHA-256 para senhas)       |
+| `SecureRandom`          | Geração de tokens seguros                       |
+| `javax.crypto.*`        | Criptografia simétrica e assimétrica (AES, RSA) |
+| `BCryptPasswordEncoder` | Hash seguro de senha com salt                   |
+| `JWT`                   | Autenticação via tokens                         |
+
+---
+
+## 🛠️ 5. Utilitários e Validação
+
+| Classe/Anotação               | Uso                                           |
+| ----------------------------- | --------------------------------------------- |
+| `Objects.requireNonNull()`    | Evita NullPointerException                    |
+| `Pattern`, `Matcher`          | Regex para CPF, e-mails                       |
+| `@NotNull`, `@Email`, `@Size` | Validações com `javax.validation.constraints` |
+| `@CPF`                        | Validação de CPF (via Hibernate Validator)    |
+
+---
+
+## 🧵 6. Concorrência
+
+| Classe/API                 | Finalidade                               |
+| -------------------------- | ---------------------------------------- |
+| `ExecutorService`          | Execução assíncrona com controle de pool |
+| `CompletableFuture`        | Concorrência moderna e reativa           |
+| `ScheduledExecutorService` | Agendamento de tarefas                   |
+| `ReentrantLock`            | Controle explícito de acesso concorrente |
+
+---
+
+## 🧾 7. Persistência com JPA e Spring Data
+
+| Anotação                        | Finalidade                                |
+| ------------------------------- | ----------------------------------------- |
+| `@Entity`, `@Table`             | Representa tabela no banco                |
+| `@Id`, `@GeneratedValue`        | Identificador e geração automática        |
+| `@OneToMany`, `@ManyToOne`, etc | Relacionamentos entre entidades           |
+| `JpaRepository<T, ID>`          | Repositórios prontos para acesso ao banco |
+| `@Query`                        | Queries customizadas em JPQL              |
+| `EntityManager`                 | Acesso manual ao contexto de persistência |
+
+---
+
+## 🔄 8. Serialização e Conversão
+
+| Classe/API               | Uso                                 |
+| ------------------------ | ----------------------------------- |
+| `ObjectMapper` (Jackson) | Conversão entre JSON e objetos Java |
+| `@JsonProperty`          | Personaliza nome de campo JSON      |
+| `@JsonIgnore`            | Ignora campos na serialização       |
+| `ModelMapper`            | Conversão entre DTOs e Entidades    |
+
+---
+
+## 📊 9. Logging e Observabilidade
+
+| Ferramenta/Classe           | Finalidade                              |
+| --------------------------- | --------------------------------------- |
+| `@Slf4j` (Lombok)           | Geração automática de logger            |
+| `LoggerFactory.getLogger()` | Logger manual via SLF4J                 |
+| `Logback`, `Log4j2`         | Frameworks de logging configuráveis     |
+| `Micrometer` + `Prometheus` | Métricas para monitoramento em produção |
+
+---
+
+## 🧪 10. Testes Automatizados
+
+| Framework/Classe  | Finalidade                                |
+| ----------------- | ----------------------------------------- |
+| `JUnit 5`         | Testes unitários                          |
+| `Mockito`         | Mock de dependências                      |
+| `Testcontainers`  | Integração com bancos em containers reais |
+| `@SpringBootTest` | Testes com contexto Spring                |
+| `@DataJpaTest`    | Testes isolados de repositórios JPA       |
+
+---
+
+## ✅ Recomendação Final
+
+Use esse guia como **referência técnica para arquitetura, testes, segurança e persistência** em sistemas bancários modernos baseados em Java + Spring Boot.
+
+> Para projetos reais, utilize também:
+>
+> - Docker + Docker Compose
+> - Spring Boot Actuator
+> - Spring Security com JWT
+> - Auditoria com Envers ou listeners
+
+---
+
+## 📚 Créditos
+
+Elaborado por um estudante de Java e engenharia de software com foco em sistemas bancários, back-end e alta escalabilidade.
+
+Se você gostou deste guia ou quer contribuir com mais conteúdo voltado a bancos, pagamentos, crédito ou microserviços Java, fique à vontade para abrir uma issue ou pull request.
+
+---
+
+📌 **Contato e Contribuição**
+
+- ✉️ Email: cardosofiles@outlook.com
+- 💻 GitHub: [Cardosofiles](https://github.com/Cardosofiles)
+- 🌐 Site pessoal [MinimalistPortfolio](https://minimalist-portfolio-joao-batista-snowy.vercel.app/)
+- ℹ️ LinkedIn [Perfil](https://www.linkedin.com/in/joaobatista-dev/)
+
+  > “Software bancário exige precisão, segurança e desempenho. A base disso é um domínio sólido da linguagem, arquitetura e boas práticas.”  
+  > — Estudante. Cardoso, Eng. de Software
+
+---

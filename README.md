@@ -407,6 +407,24 @@ networks:
 
 ```
 
+## ⚙️ Exemplo das Environments
+
+```bash
+SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/application-spring-db
+SPRING_DATASOURCE_USERNAME=docker
+SPRING_DATASOURCE_PASSWORD=docker
+
+
+POSTGRES_DB=application-spring-db
+POSTGRES_USER=docker
+POSTGRES_PASSWORD=docker
+
+
+PGADMIN_DEFAULT_EMAIL=admin@admin.com
+PGADMIN_DEFAULT_PASSWORD=admin
+
+```
+
 ## 💻 Observação
 
 - Será necessário criar o arquivo `.env` com as variáveis ambiente.
